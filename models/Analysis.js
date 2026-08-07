@@ -13,15 +13,35 @@ const analysisSchema = new mongoose.Schema(
       required: true,
     },
 
-    summary: String,
+    summary: [String],
 
-    risks: [String],
+    risks: [
+      {
+        title: String,
+        description: String,
+      },
+    ],
 
     advantages: [String],
 
     recommendation: String,
 
     riskScore: Number,
+
+    keyInfo: [
+      {
+        label: String,
+        value: String,
+      },
+    ],
+
+    checklist: [String],
+
+    easyExplanation: {
+      title: String,
+      original: String,
+      translated: String,
+    },
   },
   {
     timestamps: true,

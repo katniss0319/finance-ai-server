@@ -4,10 +4,10 @@ export const chat = async (req, res) => {
   try {
     const { message } = req.body;
 
-    const answer = await chatWithAI(message);
+    const reply = await chatWithAI(message);
 
     res.json({
-      answer,
+      reply,
     });
 
   } catch (err) {

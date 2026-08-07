@@ -68,7 +68,10 @@ if (ext === ".pdf") {
     const analysis = await Analysis.create({
       user: req.user.userId,
 
-      fileName: req.file.originalname,
+     fileName: Buffer.from(
+  req.file.originalname,
+  "latin1"
+).toString("utf8"),
 
       summary: result.summary,
 
@@ -79,6 +82,10 @@ if (ext === ".pdf") {
       recommendation: result.recommendation,
 
       riskScore: result.riskScore,
+
+      keyInfo: result.keyInfo,
+  easyExplanation: result.easyExplanation,
+  checklist: result.checklist,
     });
 
     res.status(200).json(analysis);
@@ -88,6 +95,45 @@ if (ext === ".pdf") {
 
     res.status(500).json({
       message: "계약서 분석 실패",
+    });
+  }
+};
+
+export const getMyAnalyses = async (req, res) => {
+  try {
+    const analyses = await Analysis.find({
+      user: req.user.userId,
+    }).sort({ createdAt: -1 });
+
+    res.status(200).json(analyses);
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      message: "분석 내역 조회 실패",
+    });
+  }
+};
+
+export const getAnalysisById = async (req, res) => {
+  try {
+    const analysis = await Analysis.findOne({
+      _id: req.params.id,
+      user: req.user.userId,
+    });
+
+    if (!analysis) {
+      return res.status(404).json({
+        message: "분석 결과를 찾을 수 없습니다.",
+      });
+    }
+
+    res.status(200).json(analysis);
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      message: "분석 결과 조회 실패",
     });
   }
 };
