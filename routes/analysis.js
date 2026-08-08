@@ -6,12 +6,14 @@ import {
   uploadAnalysis,
   getMyAnalyses,
   getAnalysisById,
+  deleteAnalyses,
 } from "../controllers/analysisController.js";
 
 const router = express.Router();
 
 router.get("/", auth, getMyAnalyses);
 router.get("/:id", auth, getAnalysisById);
+router.delete("/", auth, deleteAnalyses);
 
 router.post(
   "/upload",

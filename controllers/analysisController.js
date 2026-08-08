@@ -137,3 +137,21 @@ export const getAnalysisById = async (req, res) => {
     });
   }
 };
+export const deleteAnalyses = async (req, res) => {
+  try {
+    await Analysis.deleteMany({
+      _id: { $in: req.body.ids },
+      user: req.user.userId,
+    });
+
+    res.status(200).json({
+      message: "삭제 완료",
+    });
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      message: "삭제 실패",
+    });
+  }
+};
