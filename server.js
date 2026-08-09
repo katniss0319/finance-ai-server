@@ -8,6 +8,8 @@ import authRoutes from "./routes/auth.js";
 import analysisRoutes from "./routes/analysis.js";
 import productRoutes from "./routes/product.js";
 import chatRoutes from "./routes/chat.js";
+import compareRoutes from "./routes/compare.js";
+import dictionaryRoutes from "./routes/dictionary.js";
 
 const app = express();
 
@@ -17,6 +19,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/analysis", analysisRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/compare", compareRoutes);
+app.use("/api/dictionary", dictionaryRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)
