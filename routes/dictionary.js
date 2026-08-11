@@ -80,7 +80,19 @@ router.get("/popular", async (req, res) => {
 // 용어 상세
 router.get("/:id", async (req, res) => {
   try {
-    const term = await Dictionary.findById(req.params.id);
+    const { id } = req.params;
+
+    let term;
+
+    // MongoDB ObjectId인 경우
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
+      term = await Dictionary.findById(id);
+    } else {
+      // 용어 이름으로 들어온 경우
+      term = await Dictionary.findOne({
+        term: decodeURIComponent(id),
+      });
+    }
 
     if (!term) {
       return res.status(404).json({
@@ -88,16 +100,21 @@ router.get("/:id", async (req, res) => {
       });
     }
 
+    // 조회수 증가
     await Dictionary.findByIdAndUpdate(
-      req.params.id,
+      term._id,
       {
-        $inc: { views: 1 },
+        $inc: {
+          views: 1,
+        },
       }
     );
 
     res.json(term);
+
   } catch (error) {
-    console.error(error);
+    console.error("용어 상세 조회 실패:", error);
+
     res.status(500).json({
       message: "용어를 불러오지 못했습니다.",
     });

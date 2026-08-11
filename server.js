@@ -10,6 +10,7 @@ import productRoutes from "./routes/product.js";
 import chatRoutes from "./routes/chat.js";
 import compareRoutes from "./routes/compare.js";
 import dictionaryRoutes from "./routes/dictionary.js";
+import favoriteRoutes from "./routes/favorites.js";
 
 const app = express();
 
@@ -21,9 +22,11 @@ app.use("/api/products", productRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/compare", compareRoutes);
 app.use("/api/dictionary", dictionaryRoutes);
+app.use("/api/favorites", favoriteRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)
+  
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.log(err));
 
