@@ -31,7 +31,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.get("/", (req, res) => {
-  res.send("SafeSign Server Running");
+  res.send("CHOICON Server Running");
 });
 
 const PORT = process.env.PORT || 5000;
