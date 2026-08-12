@@ -410,7 +410,7 @@ export const exportMyData = async (req, res) => {
 
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename="SafeSign_backup_${date}.xlsx"`
+      `attachment; filename="Choicon_backup_${date}.xlsx"`
     );
 
     res.send(buffer);

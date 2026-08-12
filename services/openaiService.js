@@ -248,7 +248,7 @@ export const chatWithAI = async (message) => {
     model: "gpt-5-mini",
 
 input: `
-당신은 SafeSign AI입니다.
+당신은 CHOICON AI입니다.
 
 반드시 한국 금융위원회·금융감독원 기준을 우선한다.
 
