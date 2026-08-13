@@ -320,23 +320,7 @@ export const analyzeContractImage = async (imagePath) => {
 // ============================
 export const chatWithAI = async (message) => {
   const client = getClient();
-const cleanChatResponse = (text) => {
-  const summaryMatch = text.match(
-    /(?:①|1[.)])\s*한\s*줄\s*요약\s*:?\s*([\s\S]*?)(?=(?:②|2[.)])\s*쉬운\s*설명)/
-  );
 
-  const explanationMatch = text.match(
-    /(?:②|2[.)])\s*쉬운\s*설명\s*:?\s*([\s\S]*?)(?=(?:③|3[.)])\s*예시)/
-  );
-
-  // 전문용어 4단 포맷으로 답변한 경우에만 정리
-  if (summaryMatch && explanationMatch) {
-    return `${summaryMatch[1].trim()}\n\n${explanationMatch[1].trim()}`;
-  }
-
-  // 일반 금융 질문은 AI 답변 그대로 사용
-  return text.trim();
-};
 const response = await client.responses.create({
   model: "gpt-5-mini",
 
@@ -383,7 +367,7 @@ DSR은 소득에 비해 1년 동안 갚아야 하는 대출 원리금이 얼마�
   input: message,
 });
 
-return cleanChatResponse(response.output_text);
+  return response.output_text;
 };
 // ============================
 // 비교
