@@ -96,3 +96,29 @@ export const getCompareHistory = async (req, res) => {
     });
   }
 };
+export const deleteCompareHistories = async (req, res) => {
+  try {
+    const { ids } = req.body;
+    const userId = req.user.id;
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        message: "삭제할 비교 내역이 없습니다.",
+      });
+    }
+
+    await CompareHistory.deleteMany({
+      _id: { $in: ids },
+      user: userId,
+    });
+
+    res.json({
+      message: "비교 내역 삭제 성공",
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      message: "서버 오류",
+    });
+  }
+};
