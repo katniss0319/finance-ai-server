@@ -116,7 +116,7 @@ export const deleteCompareHistories = async (req, res) => {
       message: "비교 내역 삭제 성공",
     });
   } catch (err) {
-    console.error(err);
+    console.error("비교 내역 삭제 실패:", err);
     res.status(500).json({
       message: "서버 오류",
     });
